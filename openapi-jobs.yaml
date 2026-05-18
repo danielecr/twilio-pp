@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Twilio Jobs API
+  version: 1.0.0
+  description: API for accessing Twilio job postings
+servers:
+  - url: https://jobs.twilio.com
+    description: Twilio Jobs Server
+paths:
+  /careers:
+    get:
+      operationId: listCareers
+      summary: List job postings
+      tags:
+        - jobs
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Starting offset for pagination
+        - name: pid
+          in: query
+          schema:
+            type: integer
+          description: Page/Position ID
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum:
+              - timestamp
+              - relevance
+              - title
+          description: Sort field
+      responses:
+        '200':
+          description: List of job postings
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  schemas:
+    JobPosting:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
